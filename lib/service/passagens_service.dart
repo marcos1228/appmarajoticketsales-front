@@ -3,22 +3,20 @@ import 'dart:convert';
 import 'package:appmarajoticketsales/model/viagem.model.dart';
 import 'package:http/http.dart' as http;
 
-Future<Viagem> getPassagem() async {
-  const url = "https://bookingservice-701bb2c37a37.herokuapp.com/";
 
-  try {
-    final response = await http.get(Uri.parse(url));
-    
-    print('Response status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
+  Future<List<Viagem>> fetchViagens() async {
+    const url = 'https://bookingservice-701bb2c37a37.herokuapp.com/'; // URL da API
+    try {
+      var response = await _client.get(Uri.parse(url));
 
-    if (response.statusCode == 200){
-      return Viagem.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception("Falhou ao carregar dados. Status code: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body) as List<dynamic>;
+        List<Viagem> viagens = jsonData.map((json) => Viagem.fromJson(json)).toList();
+        return viagens;
+      } else {
+        throw Exception('Falha ao carregar dados. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Falha na conexão: $e');
     }
-  } catch (e) {
-    print('Erro na requisição: $e');
-    throw Exception("Falha na conexão: $e");
   }
-}
