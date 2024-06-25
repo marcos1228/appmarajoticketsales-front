@@ -1,9 +1,8 @@
-// pages/home_screen.dart
-
+import 'package:flutter/material.dart';
 import 'package:appmarajoticketsales/page/festas_screen.dart';
 import 'package:appmarajoticketsales/page/lanches_screen.dart';
+import 'package:appmarajoticketsales/page/viangem_screen.dart';
 import 'package:appmarajoticketsales/page/passagens_screen.dart';
-import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,6 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
+    ViagemScreen(), // Aqui incluí o PassagemScreen como o primeiro item
     PassagensScreen(),
     FestasScreen(),
     LanchesScreen(),
@@ -48,10 +48,15 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+             BottomNavigationBarItem(
             icon: Icon(Icons.directions_boat),
             label: 'Passagens',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.directions_boat),
+            label: 'Viagens', // Rótulo atualizado para 'Viagens'
+          ),
+       
           BottomNavigationBarItem(
             icon: Icon(Icons.festival),
             label: 'Festas',
